@@ -1,5 +1,6 @@
 package sg.edu.nus.iss;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +19,25 @@ public class App
        }
 
        // prompt user for id to search
+       Console con = System.console();
+       System.out.println("Please enter an id that you would like to search for: ");
+       String idSearch = con.readLine();
 
-       // call search()
 
-       // if found
+       // call search(), if found and not found condition
+       if(CashCard.Search(cardList, idSearch)==null){
+        System.out.println("Card was not found!");
+       }else{
+        CashCard card = CashCard.Search(cardList, idSearch);
+        System.out.println(card.toString());
 
-       // if not found
+        //prompt user for deduct amount
+        System.out.println("How much would you like to deduct?");
+        double deductAmount = Double.parseDouble(con.readLine());
+        card.Deduct(deductAmount);
+
+       }
+
 
     }
 
@@ -41,14 +55,6 @@ public class App
         cardList.add(card5);   
     }
 
-    public CashCard Search(List<CashCard> cardList, String targetId){
-        for (CashCard card: cardList){
-            if (targetId.equals(card.getId())){
-                return card;
-            }else{
-                return null;
-            }
-        }
-    }
+
 
 }

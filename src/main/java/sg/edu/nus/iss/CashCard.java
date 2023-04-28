@@ -1,5 +1,7 @@
 package sg.edu.nus.iss;
 
+import java.util.List;
+
 public class CashCard {
     private String id;
     private double balance;
@@ -35,7 +37,10 @@ public class CashCard {
 
     //top up
     public void TopUp(double topUpAmount){
-
+        if (topUpAmount>0){
+            this.balance+=topUpAmount;
+            System.out.println(topUpAmount+" has been added. "+ this.balance + " is the new balance");
+        }
     }
 
     //deduct
@@ -44,9 +49,13 @@ public class CashCard {
         boolean deducted = false;
         // set a if condition later to change the deducted depending on success
         if (deductAmount<this.balance && deductAmount>0){
+            this.balance -= deductAmount;
+            System.out.println(deductAmount+" has been deducted. "+ this.balance + " remaining.");
 
+            deducted= true;
+        }else{
+            System.out.println("Failed to deduct: Insufficient balance or invalid entry");
         }
-
         return deducted;
     }
 
@@ -59,7 +68,14 @@ public class CashCard {
         return "CashCard [id=" + id + ", balance=" + balance + "]";
     }
 
-
+    static CashCard Search(List<CashCard> cardList, String targetId){
+        for (CashCard card: cardList){
+            if (targetId.equals(card.getId())){
+                return card;
+            }
+        }
+        return null;
+    }
     
 
 }
